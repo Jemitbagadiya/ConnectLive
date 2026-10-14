@@ -1,0 +1,48 @@
+CONNECTLIVE — MANUAL SETUP
+
+REQUIRED
+1. Install Node.js 20 or newer: https://nodejs.org/
+2. Create a MongoDB Atlas account: https://www.mongodb.com/atlas
+   - Create a free/shared cluster if available in your region.
+   - Create a database user and strong password.
+   - In Network Access, allow your current IP for local development. Avoid 0.0.0.0/0 for production unless you understand the exposure.
+   - Copy the Node.js driver connection string. Replace <password> with the database user's password and use database name connectlive.
+3. Copy server/.env.example to server/.env:
+   MONGODB_URI=mongodb+srv://...
+   JWT_SECRET=replace-with-a-long-random-secret
+   CLIENT_URL=http://localhost:5173
+4. Copy client/.env.example to client/.env:
+   VITE_API_URL=http://localhost:5000/api
+   VITE_SOCKET_URL=http://localhost:5000
+5. From the project root run:
+   npm install
+   npm run install:all
+   npm run dev
+6. Register two separate accounts in separate browser profiles/devices. Add the other user's registered email using the + button.
+
+REQUIRED LIBRARIES
+Installed by npm; no separate API keys:
+- React, Vite, TypeScript
+- Express, Socket.IO, socket.io-client
+- Mongoose
+- bcryptjs, jsonwebtoken
+- cors, helmet, express-rate-limit, dotenv
+- concurrently, tsx
+
+OPTIONAL DEPLOYMENT
+- GitHub: https://github.com/ — store source code (never commit .env files).
+- Render: https://render.com/ — deploy backend. Build command: npm install && npm run build --workspace server. Start command: npm run start --workspace server. Set MONGODB_URI, JWT_SECRET, CLIENT_URL, NODE_ENV=production.
+- Vercel: https://vercel.com/ — deploy the client directory. Build command: npm run build; output directory: dist. Set VITE_API_URL=https://YOUR-RENDER-SERVICE.onrender.com/api and VITE_SOCKET_URL=https://YOUR-RENDER-SERVICE.onrender.com.
+- Update server CLIENT_URL to the deployed Vercel URL after deployment.
+
+NOT REQUIRED
+- No paid SMS API is required for in-website live chat.
+- No email provider is required for this version.
+- No OAuth provider is required.
+
+SECURITY
+- Use a unique, long JWT_SECRET in production.
+- Do not upload .env files to GitHub.
+- Restrict Atlas network access.
+- Configure production HTTPS URLs and exact CORS origins.
+- Free cloud tiers can sleep, impose quotas, or change availability.
